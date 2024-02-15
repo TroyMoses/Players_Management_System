@@ -4,31 +4,30 @@
 
 <div class="col-md-6 offset-md-3">
 
+    {% if user.is_authenticated %}
+
+    <h1>Hello World!</h1>
+
+    {% else %}
+
     <h1>Login</h1>
     <br/>
     <form method="POST" action="{% url 'home' %}">
         {% csrf_token %}
         <form>
             <div class="mb-3">
-              <label 
-                for="exampleInputUsername" 
-                class="form-label">
-                Username
-            </label>
             <input 
                 type="text" 
                 class="form-control" 
-                name="username">
+                name="username" 
+                placeholder="Username" 
+                required>
             </div>
             <div class="mb-3">
-              <label 
-                for="exampleInputPassword1" 
-                class="form-label">
-                Password
-            </label>
               <input 
                 type="password" 
                 class="form-control" 
+                placeholder="Password" 
                 name="password">
             </div>
             <button 
@@ -41,6 +40,6 @@
 
 </div>
 
-
+{% endif %}
 
 {% endblock %}
