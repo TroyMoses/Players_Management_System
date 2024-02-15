@@ -2,9 +2,45 @@
 
 {% block content %}
 
+<div class="col-md-6 offset-md-3">
 
+    <h1>Login</h1>
+    <br/>
+    <form method="POST" action="{% url 'home' %}">
+        {% csrf_token %}
+        <form>
+            <div class="mb-3">
+              <label 
+                for="exampleInputUsername" 
+                class="form-label">
+                Username
+            </label>
+            <input 
+                type="text" 
+                class="form-control" 
+                name="username">
+            </div>
+            <div class="mb-3">
+              <label 
+                for="exampleInputPassword1" 
+                class="form-label">
+                Password
+            </label>
+              <input 
+                type="password" 
+                class="form-control" 
+                name="password">
+            </div>
+            <button 
+                type="submit" 
+                class="btn btn-secondary">
+                Login
+            </button>
+          </form>
+    </form>
 
-<h1>Hello World!</h1>
+</div>
+
 
 
 {% endblock %}
