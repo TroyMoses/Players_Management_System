@@ -23,18 +23,18 @@
   </thead>
   <tbody>
     
-{% if records %}
-	{% for record in records %}
+{% if players %}
+	{% for player in players %}
 		<tr>
-      <td><a href="{% url 'record' record.id %}">{{ record.id }}</a></td>
-			<td>{{ record.first_name }} {{ record.last_name }}</td>
-			<td>{{ record.email }}</td>
-			<td>{{ record.phone }}</td>
-			<td>{{ record.address }}</td>
-			<td>{{ record.city }}</td>
-			<td>{{ record.state }}</td>
-			<td>{{ record.zipcode }}</td>
-			<td>{{ record.created_at }}</td>
+      <td><a href="{% url 'player' player.id %}">{{ player.id }}</a></td>
+			<td>{{ player.first_name }} {{ player.last_name }}</td>
+			<td>{{ player.email }}</td>
+			<td>{{ player.phone }}</td>
+			<td>{{ player.address }}</td>
+			<td>{{ player.city }}</td>
+			<td>{{ player.state }}</td>
+			<td>{{ player.zipcode }}</td>
+			<td>{{ player.created_at }}</td>
 		</tr>
 	{% endfor %}
 
