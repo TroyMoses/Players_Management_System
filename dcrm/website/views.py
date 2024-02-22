@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from .forms import SignUpForm, AddRecordForm
-from .models import Record
+from .forms import SignUpForm, AddPlayerForm
+from .models import Player
 
 def home(request):
-    records = Record.objects.all()
+    players = Player.objects.all()
 
     # Check to see if logging in
     if request.method == 'POST':
@@ -22,7 +22,7 @@ def home(request):
             messages.success(request, 'Error logging in - please try again')
             return redirect('home')
     else:
-        return render(request, 'home.html', {'records': records})
+        return render(request, 'home.html', {'players': players})
 
 def login_user(request):
     pass
@@ -50,50 +50,50 @@ def register_user(request):
         return render(request, 'register.html', {'form':form})
     return render(request, 'register.html', {'form':form})
 
-def customer_record(request, pk):
+def player_record(request, pk):
 	if request.user.is_authenticated:
 		# Look Up Records
-		customer_record = Record.objects.get(id=pk)
-		return render(request, 'record.html', {'customer_record':customer_record})
+		player_record = Player.objects.get(id=pk)
+		return render(request, 'player.html', {'player_record':player_record})
 	else:
 		messages.success(request, "You must be logged in to view that page...")
 		return redirect('home')
 
-def delete_record(request, pk):
+def delete_player(request, pk):
 	if request.user.is_authenticated:
-		delete_it = Record.objects.get(id=pk)
+		delete_it = Player.objects.get(id=pk)
 		delete_it.delete()
-		messages.success(request, "Record deleted successfully...")
+		messages.success(request, "Player deleted successfully...")
 		return redirect('home')
 	else:
-		messages.success(request, "You must be logged in to delete a record...")
+		messages.success(request, "You must be logged in to delete a player...")
 		return redirect('home')
 
 
-def add_record(request):
-	form = AddRecordForm(request.POST or None)
+def add_player(request):
+	form = AddPlayerForm(request.POST or None)
 	if request.user.is_authenticated:
 		if request.method == "POST":
 			if form.is_valid():
-				add_record = form.save()
-				messages.success(request, "Record added successfully")
+				add_player = form.save()
+				messages.success(request, "Player added successfully")
 				return redirect('home')
-		return render(request, 'add_record.html', {'form':form})
+		return render(request, 'add_player.html', {'form':form})
 	else:
-		messages.success(request, "You must be logged in to add a record...")
+		messages.success(request, "You must be logged in to add a player...")
 		return redirect('home')
 
 
-def update_record(request, pk):
+def update_player(request, pk):
 	if request.user.is_authenticated:
-		current_record = Record.objects.get(id=pk)
-		form = AddRecordForm(request.POST or None, instance=current_record)
+		current_player_record = Player.objects.get(id=pk)
+		form = AddPlayerForm(request.POST or None, instance=current_player_record)
 		if form.is_valid():
 			form.save()
-			messages.success(request, "Record updated successfully!")
+			messages.success(request, "Player updated successfully!")
 			return redirect('home')
-		return render(request, 'update_record.html', {'form':form})
+		return render(request, 'update_player.html', {'form':form})
 	else:
-		messages.success(request, "You must be logged in to update a record...")
+		messages.success(request, "You must be logged in to update a player...")
 		return redirect('home')
 
