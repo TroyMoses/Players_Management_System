@@ -1,2 +1,2 @@
-# CRM_app
-A web based crm application using python django
+# Player Management System
+A web based pms application using python django
