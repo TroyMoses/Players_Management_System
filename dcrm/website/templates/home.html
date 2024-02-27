@@ -12,12 +12,12 @@
     <tr>
       <th scope="col">ID</th>
       <th scope="col">Name</th>
+      <th scope="col">Gender</th>
       <th scope="col">Email</th>
       <th scope="col">Phone</th>
-      <th scope="col">Address</th>
-      <th scope="col">City</th>
-      <th scope="col">State</th>
-      <th scope="col">Zipcode</th>
+      <th scope="col">Reg_No</th>
+      <th scope="col">Course</th>
+      <th scope="col">Role</th>
       <th scope="col">Created At</th>
     </tr>
   </thead>
@@ -28,12 +28,12 @@
 		<tr>
       <td><a href="{% url 'player' player.id %}">{{ player.id }}</a></td>
 			<td>{{ player.first_name }} {{ player.last_name }}</td>
-			<td>{{ player.email }}</td>
+			<td>{{ player.gender }}</td>
+      <td>{{ player.email }}</td>
 			<td>{{ player.phone }}</td>
-			<td>{{ player.address }}</td>
-			<td>{{ player.city }}</td>
-			<td>{{ player.state }}</td>
-			<td>{{ player.zipcode }}</td>
+			<td>{{ player.reg_no }}</td>
+			<td>{{ player.course }}</td>
+			<td>{{ player.role }}</td>
 			<td>{{ player.created_at }}</td>
 		</tr>
 	{% endfor %}
@@ -41,12 +41,42 @@
 {% endif %}
 
 	
-	  </tbody>
-	</table>
+	</tbody>
+</table>
 
-
-
-
+<!-- Female Players Table -->
+<table class="table table-striped table-hover table-bordered">
+  <thead class="table-dark">
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Gender</th>
+      <th scope="col">Email</th>
+      <th scope="col">Phone</th>
+      <th scope="col">Reg_No</th>
+      <th scope="col">Course</th>
+      <th scope="col">Role</th>
+      <th scope="col">Created At</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% if female_players %}
+      {% for player in female_players %}
+      <tr>
+        <td><a href="{% url 'player' player.id %}">{{ player.id }}</a></td>
+        <td>{{ player.first_name }} {{ player.last_name }}</td>
+        <td>{{ player.gender }}</td>
+        <td>{{ player.email }}</td>
+        <td>{{ player.phone }}</td>
+        <td>{{ player.reg_no }}</td>
+        <td>{{ player.course }}</td>
+        <td>{{ player.role }}</td>
+        <td>{{ player.created_at }}</td>
+      </tr>
+      {% endfor %}
+    {% endif %}
+  </tbody>
+</table>
 
 {% else %}
 
