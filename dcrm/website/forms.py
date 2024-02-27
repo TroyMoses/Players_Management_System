@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
-from .models import Player
+from .models import MalePlayer
 
 class SignUpForm(UserCreationForm):
 	email = forms.EmailField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Email Address'}))
@@ -33,19 +33,33 @@ class SignUpForm(UserCreationForm):
 		self.fields['password2'].help_text = '<span class="form-text text-muted"><small>Enter the same password as before, for verification.</small></span>'	
 
 
-
-
 # Create Add Record Form
-class AddPlayerForm(forms.ModelForm):
+class AddMalePlayerForm(forms.ModelForm):
 	first_name = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"First Name", "class":"form-control"}), label="")
 	last_name = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Last Name", "class":"form-control"}), label="")
+	gender = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Gender", "class":"form-control"}), label="")
 	email = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Email", "class":"form-control"}), label="")
 	phone = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Phone", "class":"form-control"}), label="")
-	address = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Address", "class":"form-control"}), label="")
-	city = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"City", "class":"form-control"}), label="")
-	state = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"State", "class":"form-control"}), label="")
-	zipcode = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Zipcode", "class":"form-control"}), label="")
+	reg_no = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Reg_No", "class":"form-control"}), label="")
+	course = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Course", "class":"form-control"}), label="")
+	role = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Role", "class":"form-control"}), label="")
+	
 
 	class Meta:
-		model = Player
+		model = MalePlayer
+		exclude = ("user",)
+
+class AddFemalePlayerForm(forms.ModelForm):
+	first_name = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"First Name", "class":"form-control"}), label="")
+	last_name = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Last Name", "class":"form-control"}), label="")
+	gender = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Gender", "class":"form-control"}), label="")
+	email = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Email", "class":"form-control"}), label="")
+	phone = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Phone", "class":"form-control"}), label="")
+	reg_no = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Reg_No", "class":"form-control"}), label="")
+	course = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Course", "class":"form-control"}), label="")
+	role = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Role", "class":"form-control"}), label="")
+	
+
+	class Meta:
+		model = FemalePlayer
 		exclude = ("user",)
