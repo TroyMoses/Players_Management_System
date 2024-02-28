@@ -51,50 +51,96 @@ def register_user(request):
         return render(request, 'register.html', {'form':form})
     return render(request, 'register.html', {'form':form})
 
-def male_player_record(request, pk):
-	if request.user.is_authenticated:
-		# Look Up Records
-		male_player_record = MalePlayer.objects.get(id=pk)
-		return render(request, 'male_player.html', {'male_player_record':male_player_record})
-	else:
-		messages.success(request, "You must be logged in to view that page...")
-		return redirect('home')
+def bu_player(request, pk):
+    if request.user.is_authenticated:
+        try:
+            bu_player = MalePlayer.objects.get(id=pk)
+            return render(request, 'bu_player.html', {'bu_player': bu_player})
+        except Player.DoesNotExist:
+            try:
+                female_player = FemalePlayer.objects.get(id=pk)
+                return render(request, 'bu_player.html', {'bu_player': female_player})
+            except FemalePlayer.DoesNotExist:
+                messages.error(request, "Player does not exist.")
+    else:
+        messages.success(request, "You Must Be Logged In To View The Player!")
+    return redirect('home')
+
 
 def delete_player(request, pk):
-	if request.user.is_authenticated:
-		delete_it = Player.objects.get(id=pk)
-		delete_it.delete()
-		messages.success(request, "Player deleted successfully...")
-		return redirect('home')
-	else:
-		messages.success(request, "You must be logged in to delete a player...")
-		return redirect('home')
+    if request.user.is_authenticated:
+        try:
+            delete_pl = MalePlayer.objects.get(id=pk)
+            delete_pl.delete()
+            messages.success(request, "Player Deleted Successfully!")
+        except Player.DoesNotExist:
+            try:
+                delete_pl = FemalePlayer.objects.get(id=pk)
+                delete_pl.delete()
+                messages.success(request, "Player Deleted Successfully!")
+            except FemalePlayer.DoesNotExist:
+                messages.error(request, "Player does not exist.")
+    else:
+        messages.success(request, "You Must Be Logged In To Delete A Player.")
+    return redirect('home')
 
 
-def add_male_player(request):
-	form = AddPlayerForm(request.POST or None)
-	if request.user.is_authenticated:
-		if request.method == "POST":
-			if form.is_valid():
-				add_male_player = form.save()
-				messages.success(request, "Male Player added successfully")
-				return redirect('home')
-		return render(request, 'add_male_player.html', {'form':form})
-	else:
-		messages.success(request, "You must be logged in to add a player...")
-		return redirect('home')
+def add_player(request):
+    form1 = AddPlayerForm(request.POST or None)
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            if form.is_valid():
+                # Check the gender value from the form
+                gender = form.cleaned_data['gender']
+                if gender == 'Male':
+                    player = form.save(commit=False)
+                    player.save()
+                    messages.success(request, "Male Player Added Successfully!")
+                elif gender == 'Female':
+                    female_player = form.save(commit=False)
+                    female_player.save()
+                    messages.success(request, "Female Player Added Successfully!")
+                else:
+                    messages.error(request, "Invalid gender value")
+                return redirect('home')
+        return render(request, 'add_player.html', {'form': form})
+    else:
+        messages.success(request, "You Must Be Logged In To Add A Player.")
+        return redirect('home')
 
+def update_player(request, pk):
+    if request.user.is_authenticated:
+        try:
+            current_player1 = MalePlayer.objects.get(id=pk)
+			current_player2 = FemalePlayer.objects.get(id=pk)
+            form = AddPlayerForm(request.POST or None, instance=current_player)
+            if form.is_valid():
+                gender = form.cleaned_data['gender']
+                if gender == 'Male':
+                    player = form.save(commit=False)
+                    player.save()
+                    messages.success(request, "Male Player Added Successfully!")
+                elif gender == 'Female':
+                    female_player = form.save(commit=False)
+                    female_player.save()
+                    messages.success(request, "Female Player Added Successfully!")
+                else:
+                    messages.error(request, "Invalid gender value")
+                return redirect('home')
+            return render(request, 'update_player.html', {'form': form})
+        except Player.DoesNotExist:
+            try:
+                current_player = FemalePlayer.objects.get(id=pk)
+                form = AddPlayerForm(request.POST or None, instance=current_player)
+                if form.is_valid():
+                    form.save()
+                    messages.success(request, "Player Updated Successfully!")
+                    return redirect('home')
+                return render(request, 'update_player.html', {'form': form})
+            except FemalePlayer.DoesNotExist:
+                messages.error(request, "Player does not exist.")
+    else:
+        messages.success(request, "You Must Be Logged In To Update A Player.")
+    return redirect('home')
 
-def update_male_player(request, pk):
-	if request.user.is_authenticated:
-		current_player_record = MalePlayer.objects.get(id=pk)
-		form = AddMalePlayerForm(request.POST or None, instance=current_player_record)
-		if form.is_valid():
-			form.save()
-			messages.success(request, "Player updated successfully!")
-			return redirect('home')
-		return render(request, 'update_male_player.html', {'form':form})
-	else:
-		messages.success(request, "You must be logged in to update a player...")
-		return redirect('home')
 
