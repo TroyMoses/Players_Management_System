@@ -22,25 +22,21 @@
     </tr>
   </thead>
   <tbody>
-    
-{% if players %}
-	{% for player in players %}
+  {% if male_players %}
+	  {% for male_player in male_players %}
 		<tr>
-      <td><a href="{% url 'player' player.id %}">{{ player.id }}</a></td>
-			<td>{{ player.first_name }} {{ player.last_name }}</td>
-			<td>{{ player.gender }}</td>
-      <td>{{ player.email }}</td>
-			<td>{{ player.phone }}</td>
-			<td>{{ player.reg_no }}</td>
-			<td>{{ player.course }}</td>
-			<td>{{ player.role }}</td>
-			<td>{{ player.created_at }}</td>
+      <td><a href="{% url 'male_player_record' male_player.id %}">{{ male_player.id }}</a></td>
+			<td>{{ male_player.first_name }} {{ male_player.last_name }}</td>
+			<td>{{ male_player.gender }}</td>
+      <td>{{ male_player.email }}</td>
+			<td>{{ male_player.phone }}</td>
+			<td>{{ male_player.reg_no }}</td>
+			<td>{{ male_player.course }}</td>
+			<td>{{ male_player.role }}</td>
+			<td>{{ male_player.created_at }}</td>
 		</tr>
-	{% endfor %}
-
-{% endif %}
-
-	
+	  {% endfor %}
+  {% endif %}
 	</tbody>
 </table>
 
@@ -61,17 +57,17 @@
   </thead>
   <tbody>
     {% if female_players %}
-      {% for player in female_players %}
+      {% for female_player in female_players %}
       <tr>
-        <td><a href="{% url 'player' player.id %}">{{ player.id }}</a></td>
-        <td>{{ player.first_name }} {{ player.last_name }}</td>
-        <td>{{ player.gender }}</td>
-        <td>{{ player.email }}</td>
-        <td>{{ player.phone }}</td>
-        <td>{{ player.reg_no }}</td>
-        <td>{{ player.course }}</td>
-        <td>{{ player.role }}</td>
-        <td>{{ player.created_at }}</td>
+        <td><a href="{% url 'female_player_record' female_player.id %}">{{ female_player.id }}</a></td>
+        <td>{{ female_player.first_name }} {{ female_player.last_name }}</td>
+        <td>{{ female_player.gender }}</td>
+        <td>{{ female_player.email }}</td>
+        <td>{{ female_player.phone }}</td>
+        <td>{{ female_player.reg_no }}</td>
+        <td>{{ female_player.course }}</td>
+        <td>{{ female_player.role }}</td>
+        <td>{{ female_player.created_at }}</td>
       </tr>
       {% endfor %}
     {% endif %}
