@@ -2,15 +2,15 @@
 {% block content %}
 
 <div class="col-md-6 offset-md-3">
-<h1>Add Record</h1>
+<h1>Add Male Player</h1>
 <br/>
 
-<form method="POST" action="{% url 'add_player' %}">
+<form method="POST" action="{% url 'add_male_player' %}">
 	{% csrf_token %}
 
 	{{ form.as_p }}
 
-  <button type="submit" class="btn btn-secondary">Add Record</button>
+  <button type="submit" class="btn btn-secondary">Add Player</button>
    <a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
 
 </form>
