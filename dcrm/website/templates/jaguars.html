@@ -6,8 +6,9 @@
 
 {% if user.is_authenticated %}
 
-<h1>Male Players</h1><br/>
+<h1>Female Players</h1><br/>
 
+<!-- Female Players Table -->
 <table class="table table-striped table-hover table-bordered">
   <thead class="table-dark">
     <tr>
@@ -23,24 +24,24 @@
     </tr>
   </thead>
   <tbody>
-  {% if male_players %}
-	  {% for male_player in male_players %}
-		<tr>
-      <td><a href="{% url 'male_player_record' male_player.id %}">{{ male_player.id }}</a></td>
-			<td>{{ male_player.first_name }} {{ male_player.last_name }}</td>
-			<td>{{ male_player.gender }}</td>
-      <td>{{ male_player.email }}</td>
-			<td>{{ male_player.phone }}</td>
-			<td>{{ male_player.reg_no }}</td>
-			<td>{{ male_player.course }}</td>
-			<td>{{ male_player.role }}</td>
-			<td>{{ male_player.created_at }}</td>
-		</tr>
-	  {% endfor %}
-  {% endif %}
-	</tbody>
+    {% if female_players %}
+      {% for female_player in female_players %}
+      <tr>
+        <td><a href="{% url 'female_player_record' female_player.id %}">{{ female_player.id }}</a></td>
+        <td>{{ female_player.first_name }} {{ female_player.last_name }}</td>
+        <td>{{ female_player.gender }}</td>
+        <td>{{ female_player.email }}</td>
+        <td>{{ female_player.phone }}</td>
+        <td>{{ female_player.reg_no }}</td>
+        <td>{{ female_player.course }}</td>
+        <td>{{ female_player.role }}</td>
+        <td>{{ female_player.created_at }}</td>
+      </tr>
+      {% endfor %}
+    {% endif %}
+  </tbody>
 </table><br/>
-<a href="{% url 'jaguars' %}">View Female Players</a><br/><br/>
+<a href="{% url 'home' %}">View Male Players</a><br/><br/>
 
 {% else %}
 
@@ -48,7 +49,7 @@
 <h1>Login</h1>
 <br/>
 
-<form method="POST" action="{% url 'home' %}">
+<form method="POST" action="{% url 'jaguars' %}">
 	{% csrf_token %}
 
   <div class="mb-3">
