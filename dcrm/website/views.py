@@ -2,10 +2,30 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import SignUpForm, AddMalePlayerForm, AddFemalePlayerForm
-from .models import MalePlayer, FemalePlayer
+from .models import MalePlayer
+from .models import FemalePlayer
 
 def home(request):
 	male_players = MalePlayer.objects.all()
+
+    # Check to see if logging in
+	if request.method == 'POST':
+		username = request.POST['username']
+		password = request.POST['password']
+
+        # Authenticate
+		user = authenticate(request, username=username, password=password)
+		if user is not None:
+			login(request, user)
+			messages.success(request, 'You have successfully logged in')
+			return redirect('home')
+		else:
+			messages.success(request, 'Error logging in - please try again')
+			return redirect('home')
+	else:
+		return render(request, 'home.html', {'male_players': male_players})
+
+def jaguars(request):
 	female_players = FemalePlayer.objects.all()
 
     # Check to see if logging in
@@ -23,7 +43,7 @@ def home(request):
 			messages.success(request, 'Error logging in - please try again')
 			return redirect('home')
 	else:
-		return render(request, 'home.html', {'players': male_players, 'female_players': female_players})
+		return render(request, 'jaguars.html', {'female_players': female_players})
 
 def login_user(request):
     pass
@@ -168,10 +188,10 @@ def update_female_player(request, pk):
 				if gender == 'Female' or gender == 'F':
 					female_player = form.save(commit=False)
 					female_player.save()
-					messages.success(request, "Female Player Added Successfully!")
+					messages.success(request, "Female Player Updated Successfully!")
 				else:
 					messages.error(request, "Invalid gender value, must be Female or F")
-				return redirect('home')
+				return redirect('jaguars')
 			return render(request, 'update_female_player.html', {'form': form})
 		except FemalePlayer.DoesNotExist:
 			messages.error(request, "Player does not exist.")
