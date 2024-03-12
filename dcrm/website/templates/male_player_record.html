@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-
-
+{% load static %}
 
 <div class="card">
   <div class="card-header"><strong>
@@ -9,7 +8,9 @@
 		{{ male_player_record.last_name }}</strong>
   </div>
   <div class="card-body">
-
+    <div>
+      <img src="{% static image_path %}" alt="Player Image" class="img-fluid">
+    </div>
     <p class="card-text">
     <strong>ID: </strong>{{ male_player_record.id }}</p>
 

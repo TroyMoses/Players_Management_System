@@ -72,26 +72,28 @@ def register_user(request):
     return render(request, 'register.html', {'form':form})
 
 def male_player_record(request, pk):
-    if request.user.is_authenticated:
-        try:
-            male_player_record = MalePlayer.objects.get(id=pk)
-            return render(request, 'male_player_record.html', {'male_player_record': male_player_record})
-        except MalePlayer.DoesNotExist:
-            messages.error(request, "Male Player does not exist.")
-    else:
-        messages.success(request, "You Must Be Logged In To View The Player!")
-    return redirect('home')
+	if request.user.is_authenticated:
+		try:
+			male_player_record = MalePlayer.objects.get(id=pk)
+			image_path = 'images/client.jpg'
+			return render(request, 'male_player_record.html', {'male_player_record': male_player_record})
+		except MalePlayer.DoesNotExist:
+			messages.error(request, "Male Player does not exist.")
+	else:
+		messages.success(request, "You Must Be Logged In To View The Player!")
+	return redirect('home')
 
 def female_player_record(request, pk):
-    if request.user.is_authenticated:
-        try:
-            female_player_record = FemalePlayer.objects.get(id=pk)
-            return render(request, 'female_player_record.html', {'female_player_record': female_player_record})
-        except FemalePlayer.DoesNotExist:
-            messages.error(request, "Female Player does not exist.")
-    else:
-        messages.success(request, "You Must Be Logged In To View The Player!")
-    return redirect('home')
+	if request.user.is_authenticated:
+		try:
+			female_player_record = FemalePlayer.objects.get(id=pk)
+			image_path = 'images/client.jpg'
+			return render(request, 'female_player_record.html', {'female_player_record': female_player_record})
+		except FemalePlayer.DoesNotExist:
+			messages.error(request, "Female Player does not exist.")
+	else:
+		messages.success(request, "You Must Be Logged In To View The Player!")
+	return redirect('home')
 
 
 def delete_male_player(request, pk):
@@ -103,7 +105,7 @@ def delete_male_player(request, pk):
 				messages.success(request, "Male Player Deleted Successfully!")
 				return redirect('home')
 			else:
-				return render(request, 'confirm_delete.html', {'player': delete_pl})
+				return render(request, 'confirm_delete.html', {'player': delete_mpl})
 		except MalePlayer.DoesNotExist:
 			messages.error(request, "Player does not exist.")
 	else:
@@ -115,16 +117,16 @@ def delete_female_player(request, pk):
         try:
             delete_fpl = FemalePlayer.objects.get(id=pk)
             if request.method == 'POST':
-                delete_pl.delete()
+                delete_fpl.delete()
                 messages.success(request, "Female Player Deleted Successfully!")
-                return redirect('she_lighters')
+                return redirect('jaguars')
             else:
-                return render(request, 'confirm_delete.html', {'player': delete_pl})
+                return render(request, 'confirm_delete.html', {'player': delete_fpl})
         except FemalePlayer.DoesNotExist:
             messages.error(request, "Female Player does not exist.")
     else:
         messages.success(request, "You Must Be Logged In To Delete A Player.")
-    return redirect('home')
+    return redirect('jaguars')
 
 
 def add_male_player(request):

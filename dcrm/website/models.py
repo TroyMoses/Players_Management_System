@@ -2,6 +2,7 @@ from django.db import models
 
 
 class MalePlayer(models.Model):
+	image_path = models.CharField(max_length=255, null=True, blank=True)
 	first_name = models.CharField(max_length=50)
 	last_name =  models.CharField(max_length=50)
 	gender =  models.CharField(max_length=20)
@@ -16,15 +17,16 @@ class MalePlayer(models.Model):
 		return(f"{self.first_name} {self.last_name}")
 		
 class FemalePlayer(models.Model):
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
-    gender = models.CharField(max_length=10)
-    email = models.EmailField()
-    phone = models.CharField(max_length=20)
-    reg_no = models.CharField(max_length=50)
-    course = models.CharField(max_length=100)
-    role = models.CharField(max_length=100)
-    created_at = models.DateTimeField(auto_now_add=True)
+	image_path = models.CharField(max_length=255, null=True, blank=True)
+	first_name = models.CharField(max_length=255)
+	last_name = models.CharField(max_length=255)
+	gender = models.CharField(max_length=10)
+	email = models.EmailField()
+	phone = models.CharField(max_length=20)
+	reg_no = models.CharField(max_length=50)
+	course = models.CharField(max_length=100)
+	role = models.CharField(max_length=100)
+	created_at = models.DateTimeField(auto_now_add=True)
 
 
 	
