@@ -37,7 +37,12 @@ class SignUpForm(UserCreationForm):
 class AddMalePlayerForm(forms.ModelForm):
 	first_name = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"First Name", "class":"form-control"}), label="")
 	last_name = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Last Name", "class":"form-control"}), label="")
-	gender = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Gender", "class":"form-control"}), label="")
+	gender = forms.ChoiceField(
+        widget=forms.RadioSelect,
+        choices=[('M', 'Male'), ('F', 'Female')],
+        initial='M',  # Set 'M' as the default value for male player
+        required=True
+    )
 	email = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Email", "class":"form-control"}), label="")
 	phone = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Phone", "class":"form-control"}), label="")
 	reg_no = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Reg_No", "class":"form-control"}), label="")
@@ -52,7 +57,12 @@ class AddMalePlayerForm(forms.ModelForm):
 class AddFemalePlayerForm(forms.ModelForm):
 	first_name = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"First Name", "class":"form-control"}), label="")
 	last_name = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Last Name", "class":"form-control"}), label="")
-	gender = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Gender", "class":"form-control"}), label="")
+	gender = forms.ChoiceField(
+        widget=forms.RadioSelect,
+        choices=[('M', 'Male'), ('F', 'Female')],
+        initial='F',  # Set 'F' as the default value for female player
+        required=True
+    )
 	email = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Email", "class":"form-control"}), label="")
 	phone = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Phone", "class":"form-control"}), label="")
 	reg_no = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Reg_No", "class":"form-control"}), label="")
