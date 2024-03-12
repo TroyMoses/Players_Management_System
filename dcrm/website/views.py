@@ -95,23 +95,31 @@ def female_player_record(request, pk):
 
 
 def delete_male_player(request, pk):
-    if request.user.is_authenticated:
-        try:
-            delete_mpl = MalePlayer.objects.get(id=pk)
-            delete_mpl.delete()
-            messages.success(request, "Male Player Deleted Successfully!")
-        except MalePlayer.DoesNotExist:
-            messages.error(request, "Player does not exist.")
-    else:
-        messages.success(request, "You Must Be Logged In To Delete A Player.")
-    return redirect('home')
+	if request.user.is_authenticated:
+		try:
+			delete_mpl = MalePlayer.objects.get(id=pk)
+			if request.method == 'POST':
+				delete_mpl.delete()
+				messages.success(request, "Male Player Deleted Successfully!")
+				return redirect('home')
+			else:
+				return render(request, 'confirm_delete.html', {'player': delete_pl})
+		except MalePlayer.DoesNotExist:
+			messages.error(request, "Player does not exist.")
+	else:
+		messages.success(request, "You Must Be Logged In To Delete A Player.")
+	return redirect('home')
 
 def delete_female_player(request, pk):
     if request.user.is_authenticated:
         try:
             delete_fpl = FemalePlayer.objects.get(id=pk)
-            delete_fpl.delete()
-            messages.success(request, "Female Player Deleted Successfully!")
+            if request.method == 'POST':
+                delete_pl.delete()
+                messages.success(request, "Female Player Deleted Successfully!")
+                return redirect('she_lighters')
+            else:
+                return render(request, 'confirm_delete.html', {'player': delete_pl})
         except FemalePlayer.DoesNotExist:
             messages.error(request, "Female Player does not exist.")
     else:
@@ -133,6 +141,9 @@ def add_male_player(request):
 				else:
 					messages.error(request, "Invalid gender value, must be Male or M")
 					return redirect('home')
+		else:
+            # Set the default value for the gender field
+			form.fields['gender'].initial = 'M'
 		return render(request, 'add_male_player.html', {'form': form})
 	else:
 		messages.success(request, "You Must Be Logged In To Add A Male Player.")
@@ -152,6 +163,9 @@ def add_female_player(request):
 				else:
 					messages.error(request, "Invalid gender value, must be Female or F")
 					return redirect('home')
+		else:
+            # Set the default value for the gender field
+			form.fields['gender'].initial = 'M'
 		return render(request, 'add_female_player.html', {'form': form})
 	else:
 		messages.success(request, "You Must Be Logged In To Add A Female Player.")
