@@ -1,3 +1,4 @@
+from django.contrib import admin
 from django.urls import path
 from . import views
 
@@ -15,6 +16,7 @@ urlpatterns = [
     path('add_female_player/', views.add_female_player, name='add_female_player'),
     path('update_male_player/<int:pk>', views.update_male_player, name='update_male_player'),
     path('update_female_player/<int:pk>', views.update_female_player, name='update_female_player'),
-
+    path('search_male_player/', views.search_male_player, name='search_male_player'),
+    path('search_female_player/', views.search_female_player, name='search_female_player'),
 ]
 
