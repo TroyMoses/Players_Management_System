@@ -214,3 +214,41 @@ def update_female_player(request, pk):
 	else:
 		messages.success(request, "You Must Be Logged In To Update A Female Player.")
 	return redirect('home')
+
+def search_male_player(request):
+    # query = request.GET.get('query')
+    # players = MalePlayer.objects.filter(name__icontains=query) if query else MalePlayer.objects.all()
+    # # Rest of your code
+	query = request.GET.get('query')
+	if query:
+        # Perform case-insensitive search on fields you want to search
+		male_players = MalePlayer.objects.filter(
+            # gender='Male',
+            first_name__icontains=query
+			# last_name__icontains=query
+            # Add more fields as needed for the search
+        )
+		context = {'male_players': male_players, 'query': query}
+		return render(request, 'home.html', context)
+	else:
+        # Handle the case where no search query is provided
+		return render(request, 'home.html')
+
+def search_female_player(request):
+    # query = request.GET.get('query')
+    # players = FemalePlayer.objects.filter(name__icontains=query) if query else FemalePlayer.objects.all()
+    # # Rest of your code
+	query = request.GET.get('query')
+	if query:
+        # Perform case-insensitive search on fields you want to search
+		female_players = FemalePlayer.objects.filter(
+            gender='Female',
+            first_name__icontains=query,
+			last_name__icontains=query
+            # Add more fields as needed for the search
+        )
+		context = {'female_players': female_players, 'query': query}
+		return render(request, 'jaguars.html', context)
+	else:
+        # Handle the case where no search query is provided
+		return render(request, 'jaguars.html')
